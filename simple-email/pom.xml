@@ -7,7 +7,7 @@
 	<version>0.1.1</version>
 
 	<description>Continuation of the Seam 3 Mail Module</description>
-	<url>https://github.com/codylerum/simple-email</url>
+	<url>https://github.com/jlmc/simple-email</url>
 
 	<licenses>
 		<license>
@@ -17,17 +17,9 @@
 	</licenses>
 
 	<scm>
-		<url>https://github.com/codylerum/simple-email</url>
-		<connection>https://github.com/codylerum/simple-email.git</connection>
+		<url>https://github.com/jlmc/simple-email/tree/master/simple-email</url>
+		<connection>https://github.com/jlmc/simple-email.git</connection>
 	</scm>
-
-	<developers>
-		<developer>
-			<name>Cody Lerum</name>
-			<email>cody.lerum@gmail.com</email>
-		</developer>
-	</developers>
-
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
