@@ -41,7 +41,7 @@ public interface MailMessage {
      * @param emailAddress
      *            {@link InternetAddress} of the address to be added
      */
-    public MailMessage from(InternetAddress emailAddress);
+    public MailMessage from(InternetAddress... emailAddress);
 
     /**
      * Adds a From Address
@@ -72,7 +72,7 @@ public interface MailMessage {
      * @param emailAddress
      *            {@link InternetAddress} of the address to be added
      */
-    public MailMessage replyTo(InternetAddress emailAddress);
+    public MailMessage replyTo(InternetAddress... emailAddress);
 
     /**
      * Adds a REPLY-TO Address
@@ -112,7 +112,7 @@ public interface MailMessage {
      * @param emailAddress
      *            {@link InternetAddress} of the address to be added
      */
-    public MailMessage to(InternetAddress emailAddress);
+    public MailMessage to(InternetAddress... emailAddress);
 
     /**
      * Add TO recipient
@@ -143,7 +143,7 @@ public interface MailMessage {
      * @param emailAddress
      *            {@link InternetAddress} of the address to be added
      */
-    public MailMessage cc(InternetAddress emailAddress);
+    public MailMessage cc(InternetAddress... emailAddress);
 
     /**
      * Add CC recipient
@@ -174,7 +174,7 @@ public interface MailMessage {
      * @param emailAddress
      *            {@link InternetAddress} of the address to be added
      */
-    public MailMessage bcc(InternetAddress emailAddress);
+    public MailMessage bcc(InternetAddress... emailAddress);
 
     /**
      * Add BCC recipient

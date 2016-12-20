@@ -9,20 +9,6 @@
 
 package org.xine.email.impl.util;
 
-import org.xine.email.api.EmailContact;
-import org.xine.email.api.EmailMessage;
-import org.xine.email.api.EmailMessageType;
-import org.xine.email.api.Header;
-import org.xine.email.api.InvalidAddressException;
-import org.xine.email.api.MailException;
-import org.xine.email.api.RecipientType;
-import org.xine.email.api.SendFailedException;
-import org.xine.email.api.SessionConfig;
-import org.xine.email.impl.BaseMailMessage;
-import org.xine.email.impl.MailSessionAuthenticator;
-
-import com.sun.mail.smtp.SMTPMessage;
-
 import java.io.UnsupportedEncodingException;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
@@ -42,6 +28,20 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
+
+import org.xine.email.api.EmailContact;
+import org.xine.email.api.EmailMessage;
+import org.xine.email.api.EmailMessageType;
+import org.xine.email.api.Header;
+import org.xine.email.api.InvalidAddressException;
+import org.xine.email.api.MailException;
+import org.xine.email.api.RecipientType;
+import org.xine.email.api.SendFailedException;
+import org.xine.email.api.SessionConfig;
+import org.xine.email.impl.BaseMailMessage;
+import org.xine.email.impl.MailSessionAuthenticator;
+
+import com.sun.mail.smtp.SMTPMessage;
 
 /**
  * The Class MailUtility.
@@ -82,14 +82,14 @@ public final class MailUtility {
      * @throws InvalidAddressException
      *             the invalid address exception
      */
-    public static Collection<InternetAddress> internetAddress(final String... addresses)
+    public static InternetAddress[] internetAddress(final String... addresses)
             throws InvalidAddressException {
         final ArrayList<InternetAddress> result = new ArrayList<>();
 
         for (final String address : addresses) {
             result.add(MailUtility.internetAddress(address));
         }
-        return result;
+        return result.toArray(new InternetAddress[0]);
     }
 
     /**
@@ -140,7 +140,7 @@ public final class MailUtility {
      * @throws InvalidAddressException
      *             the invalid address exception
      */
-    public static Collection<InternetAddress> internetAddress(
+    public static InternetAddress[] internetAddress(
             final Collection<? extends EmailContact> emailContacts) throws InvalidAddressException {
         final Set<InternetAddress> internetAddresses = new HashSet<>();
 
@@ -148,7 +148,7 @@ public final class MailUtility {
             internetAddresses.add(MailUtility.internetAddress(ec));
         }
 
-        return internetAddresses;
+        return internetAddresses.toArray(new InternetAddress[0]);
     }
 
     /**
@@ -197,7 +197,7 @@ public final class MailUtility {
      * @throws InvalidAddressException
      *             the invalid address exception
      */
-    public static List<InternetAddress> getInternetAddressses(final Address[] addresses)
+    public static InternetAddress[] getInternetAddressses(final Address[] addresses)
             throws InvalidAddressException {
         final List<InternetAddress> result = new ArrayList<>();
         if (addresses != null) {
@@ -213,7 +213,7 @@ public final class MailUtility {
                 }
             }
         }
-        return result;
+        return result.toArray(new InternetAddress[0]);
     }
 
     /**
@@ -279,12 +279,6 @@ public final class MailUtility {
         return session;
     }
 
-    /**
-     * Header stripper.
-     * @param header
-     *            the header
-     * @return the string
-     */
     public static String headerStripper(final String header) {
         if (!Strings.isNullOrBlank(header)) {
             final String s = header.trim();
@@ -297,14 +291,6 @@ public final class MailUtility {
         return header;
     }
 
-    /**
-     * Creates the mime message.
-     * @param e
-     *            the e
-     * @param session
-     *            the session
-     * @return the SMTP message
-     */
     public static SMTPMessage createMimeMessage(final EmailMessage e, final Session session) {
         final BaseMailMessage b = new BaseMailMessage(session, e.getCharset(),
                 e.getRootContentType());

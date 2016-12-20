@@ -9,11 +9,11 @@
 
 package org.xine.email.api;
 
-import org.xine.email.impl.attachments.BaseAttachment;
-
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 import javax.mail.internet.InternetAddress;
@@ -21,6 +21,8 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+
+import org.xine.email.impl.attachments.BaseAttachment;
 
 /**
  * Stores information about an EmailMessage while it is being built and after sending.
@@ -164,7 +166,7 @@ public class EmailMessage {
      */
     @XmlElement
     public List<InternetAddress> getFromAddresses() {
-        return this.fromAddresses;
+        return Collections.unmodifiableList(fromAddresses);
     }
 
     /**
@@ -172,7 +174,7 @@ public class EmailMessage {
      * @param fromAddresses
      *            the new from addresses
      */
-    public void setFromAddresses(final List<InternetAddress> fromAddresses) {
+    protected void setFromAddresses(final List<InternetAddress> fromAddresses) {
         this.fromAddresses = fromAddresses;
     }
 
@@ -182,7 +184,7 @@ public class EmailMessage {
      */
     @XmlElement
     public List<InternetAddress> getReplyToAddresses() {
-        return this.replyToAddresses;
+        return Collections.unmodifiableList(this.replyToAddresses);
     }
 
     /**
@@ -190,7 +192,7 @@ public class EmailMessage {
      * @param replyToAddresses
      *            the new reply to addresses
      */
-    public void setReplyToAddresses(final List<InternetAddress> replyToAddresses) {
+    protected void setReplyToAddresses(final List<InternetAddress> replyToAddresses) {
         this.replyToAddresses = replyToAddresses;
     }
 
@@ -200,7 +202,7 @@ public class EmailMessage {
      */
     @XmlElement
     public List<InternetAddress> getToAddresses() {
-        return this.toAddresses;
+        return Collections.unmodifiableList(this.toAddresses);
     }
 
     /**
@@ -209,7 +211,7 @@ public class EmailMessage {
      */
     @XmlElement
     public List<InternetAddress> getCcAddresses() {
-        return this.ccAddresses;
+        return Collections.unmodifiableList(this.ccAddresses);
     }
 
     /**
@@ -217,7 +219,7 @@ public class EmailMessage {
      * @param ccAddresses
      *            the new cc addresses
      */
-    public void setCcAddresses(final List<InternetAddress> ccAddresses) {
+    protected void setCcAddresses(final List<InternetAddress> ccAddresses) {
         this.ccAddresses = ccAddresses;
     }
 
@@ -227,7 +229,7 @@ public class EmailMessage {
      */
     @XmlElement
     public List<InternetAddress> getBccAddresses() {
-        return this.bccAddresses;
+        return Collections.unmodifiableList(this.bccAddresses);
     }
 
     /**
@@ -235,7 +237,7 @@ public class EmailMessage {
      * @param bccAddresses
      *            the new bcc addresses
      */
-    public void setBccAddresses(final List<InternetAddress> bccAddresses) {
+    protected void setBccAddresses(final List<InternetAddress> bccAddresses) {
         this.bccAddresses = bccAddresses;
     }
 
@@ -264,7 +266,7 @@ public class EmailMessage {
     @XmlElementWrapper(name = "headers")
     @XmlElement(name = "header")
     public List<Header> getHeaders() {
-        return this.headers;
+        return Collections.unmodifiableList(this.headers);
     }
 
     /**
@@ -272,7 +274,7 @@ public class EmailMessage {
      * @param headers
      *            the new headers
      */
-    public void setHeaders(final List<Header> headers) {
+    protected void setHeaders(final List<Header> headers) {
         this.headers = headers;
     }
 
@@ -420,7 +422,7 @@ public class EmailMessage {
     @XmlElementWrapper(name = "attachments")
     @XmlElement(name = "attachment")
     public List<BaseAttachment> getAttachments() {
-        return this.attachments;
+        return Collections.unmodifiableList(this.attachments);
     }
 
     /**
@@ -428,7 +430,32 @@ public class EmailMessage {
      * @param attachments
      *            the new attachments
      */
-    public void setAttachments(final List<BaseAttachment> attachments) {
+    protected void setAttachments(final List<BaseAttachment> attachments) {
         this.attachments = attachments;
     }
+
+    public void addHeader(final Header... header) {
+        this.headers.addAll(Arrays.asList(header));
+    }
+
+    public void addFrom(final InternetAddress... internetAddress) {
+        this.fromAddresses.addAll(Arrays.asList(internetAddress));
+    }
+
+    public void addReplyTo(final InternetAddress... emailAddress) {
+        this.replyToAddresses.addAll(Arrays.asList(emailAddress));
+    }
+
+    public void addTo(final InternetAddress... emailAddress) {
+        this.toAddresses.addAll(Arrays.asList(emailAddress));
+    }
+
+    public void addCc(final InternetAddress... internetAddressses) {
+        this.ccAddresses.addAll(Arrays.asList(internetAddressses));
+    }
+
+    public void addBcc(final InternetAddress... internetAddressses) {
+        this.bccAddresses.addAll(Arrays.asList(internetAddressses));
+    }
+
 }

@@ -15,33 +15,16 @@ package org.xine.email.impl;
 import javax.mail.Authenticator;
 import javax.mail.PasswordAuthentication;
 
-/**
- * The Class MailSessionAuthenticator.
- */
 public class MailSessionAuthenticator extends Authenticator {
 
-    /** The username. */
     private final String username;
-
-    /** The password. */
     private final String password;
 
-    /**
-     * Instantiates a new mail session authenticator.
-     * @param username
-     *            the username
-     * @param password
-     *            the password
-     */
     public MailSessionAuthenticator(final String username, final String password) {
         this.username = username;
         this.password = password;
     }
 
-    /*
-     * (non-Javadoc)
-     * @see javax.mail.Authenticator#getPasswordAuthentication()
-     */
     @Override
     protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(this.username, this.password);

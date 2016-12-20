@@ -12,8 +12,6 @@
 
 package org.xine.email.impl;
 
-import com.sun.mail.smtp.SMTPMessage;
-
 import java.io.InputStream;
 
 import javax.mail.Header;
@@ -21,60 +19,34 @@ import javax.mail.MessagingException;
 import javax.mail.Session;
 import javax.mail.internet.MimeMessage;
 
+import com.sun.mail.smtp.SMTPMessage;
+
 /**
  * Extends {@link MimeMessage} to allow for the setting of the Message-ID.
  */
 public class RootMimeMessage extends SMTPMessage {
 
-    /** The message id. */
     private String messageId;
 
-    /**
-     * Instantiates a new root mime message.
-     * @param session
-     *            the session
-     */
     public RootMimeMessage(final Session session) {
         super(session);
     }
 
-    /**
-     * Instantiates a new root mime message.
-     * @param session
-     *            the session
-     * @param inputStream
-     *            the input stream
-     * @throws MessagingException
-     *             the messaging exception
-     */
     public RootMimeMessage(final Session session, final InputStream inputStream)
             throws MessagingException {
         super(session, inputStream);
     }
 
-    /*
-     * (non-Javadoc)
-     * @see javax.mail.internet.MimeMessage#updateMessageID()
-     */
     @Override
     protected void updateMessageID() throws MessagingException {
         final Header header = new Header("Message-ID", this.messageId);
         setHeader(header.getName(), header.getValue());
     }
 
-    /**
-     * Gets the message id.
-     * @return the message id
-     */
     public String getMessageId() {
         return this.messageId;
     }
 
-    /**
-     * Sets the message id.
-     * @param messageId
-     *            the new message id
-     */
     public void setMessageId(final String messageId) {
         this.messageId = messageId;
     }

@@ -12,11 +12,6 @@
 
 package org.xine.email.impl.util;
 
-import org.xine.email.api.ContentDisposition;
-import org.xine.email.api.EmailMessage;
-import org.xine.email.api.MailException;
-import org.xine.email.impl.attachments.InputStreamAttachment;
-
 import java.io.IOException;
 
 import javax.mail.BodyPart;
@@ -24,6 +19,12 @@ import javax.mail.Message;
 import javax.mail.Message.RecipientType;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMultipart;
+
+import org.xine.email.api.ContentDisposition;
+import org.xine.email.api.EmailMessage;
+import org.xine.email.api.Header;
+import org.xine.email.api.MailException;
+import org.xine.email.impl.attachments.InputStreamAttachment;
 
 /**
  * The Class MessageConverter.
@@ -58,16 +59,14 @@ public class MessageConverter {
         this.emailMessage = new EmailMessage();
 
         try {
-            this.emailMessage.setFromAddresses(MailUtility.getInternetAddressses(m.getFrom()));
-            this.emailMessage.getToAddresses().addAll(
-                    MailUtility.getInternetAddressses(m.getRecipients(RecipientType.TO)));
-            this.emailMessage.setCcAddresses(MailUtility.getInternetAddressses(m
-                    .getRecipients(RecipientType.CC)));
-            this.emailMessage.setBccAddresses(MailUtility.getInternetAddressses(m
+            this.emailMessage.addFrom(MailUtility.getInternetAddressses(m.getFrom()));
+            this.emailMessage.addTo(MailUtility.getInternetAddressses(m.getRecipients(RecipientType.TO)));
+            this.emailMessage.addCc(MailUtility.getInternetAddressses(m.getRecipients(RecipientType.CC)));
+            this.emailMessage.addBcc(MailUtility.getInternetAddressses(m
                     .getRecipients(RecipientType.BCC)));
             this.emailMessage.setSubject(m.getSubject());
             this.emailMessage.setMessageId(m.getHeader("Message-ID")[0]);
-            this.emailMessage.getHeaders().addAll(MailUtility.getHeaders(m.getAllHeaders()));
+            this.emailMessage.addHeader(MailUtility.getHeaders(m.getAllHeaders()).toArray(new Header[0]));
 
             if (m.getContentType().toLowerCase().contains("multipart/")) {
                 addMultiPart((MimeMultipart) m.getContent());
